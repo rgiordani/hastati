@@ -1,21 +1,25 @@
 {
   "name": "hastati",
   "displayName": "Hastati",
-  "description": "Cursor aligner (for now)",
+  "description": "Simple text aligner (for now)",
   "version": "0.0.1",
+  "publisher": "rgiordani",
   "engines": {
     "vscode": "^1.88.0"
   },
+  "license": "MIT",
   "categories": [
     "Other"
   ],
+  "repository": "https://github.com/rgiordani/hastati",
+  "icon": "./icon.png",
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
     "commands": [
       {
         "command": "hastati.alignText",
-        "title": "Align text at cursors"
+        "title": "Hastati: Align text at cursors"
       }
     ]
   },
