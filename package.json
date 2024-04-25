@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "publisher": "rgiordani",
   "engines": {
-    "vscode": "^1.88.0"
+    "vscode": "^1.85.0"
   },
   "license": "MIT",
   "categories": [
