@@ -2,7 +2,7 @@
   "name": "hastati",
   "displayName": "Hastati",
   "description": "Simple text aligner (for now)",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "rgiordani",
   "engines": {
     "vscode": "^1.85.0"
@@ -20,6 +20,10 @@
       {
         "command": "hastati.alignText",
         "title": "Hastati: Align text at cursors"
+      },
+      {
+        "command": "hastati.alignCursors",
+        "title": "Hastati: Align cursors"
       }
     ]
   },
