@@ -1,34 +1,40 @@
-
-import * as vscode from 'vscode';
+import * as vscode from "vscode";
 
 export function activate(context: vscode.ExtensionContext) {
 
-	// Aligns the text at the cursors to the rightmost cursor column
-	context.subscriptions.push(vscode.commands.registerCommand('hastati.alignText', () => {
-		const editor = vscode.window.activeTextEditor;
-		if (editor === undefined) { return; }
+    // Aligns the selected texts to the rightmost selection start
+    context.subscriptions.push(vscode.commands.registerCommand("hastati.alignText", () => {
+        if (!vscode.window.activeTextEditor) {
+            return;
+        }
 
-		const maxColumn = Math.max(...editor.selections.map((sel) => sel.active.character));
+        const editor = vscode.window.activeTextEditor;
 
-		editor.edit((editBuilder) => editor.selections.forEach((sel) => {
-			const numSpaces = maxColumn - sel.active.character;
-			if (numSpaces > 0) {
-				editBuilder.insert(sel.active, " ".repeat(numSpaces));
-			}
-		}));
-	}));
+        const maxColumn = Math.max(...editor.selections.map((sel) => sel.start.character));
 
-	// Aligns the cursors to the leftmost cursor column
-	context.subscriptions.push(vscode.commands.registerCommand('hastati.alignCursors', () => {
-		const editor = vscode.window.activeTextEditor;
-		if (editor === undefined) { return; }
+        editor.edit((editBuilder) => editor.selections.forEach((sel) => {
+            const numSpaces = maxColumn - sel.start.character;
+            if (numSpaces > 0) {
+                editBuilder.insert(sel.start, " ".repeat(numSpaces));
+            }
+        }));
+    }));
 
-		const minColumn = Math.min(...editor.selections.map((sel) => sel.active.character));
+    // Aligns the cursors to the leftmost selection start
+    context.subscriptions.push(vscode.commands.registerCommand("hastati.alignCursors", () => {
+        if (!vscode.window.activeTextEditor) {
+            return;
+        }
 
-		editor.selections = editor.selections.map((sel) =>
-			new vscode.Selection(sel.active.line, minColumn, sel.active.line, minColumn)
-	    );
-	}));
+        const editor = vscode.window.activeTextEditor;
+
+        const minColumn = Math.min(...editor.selections.map((sel) => sel.start.character));
+
+        editor.selections = editor.selections.map((sel) =>
+            new vscode.Selection(sel.end.line, sel.end.character, sel.start.line, minColumn)
+        );
+    }));
 }
 
-export function deactivate() { }
+export function deactivate() {
+}
