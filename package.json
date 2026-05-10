@@ -2,7 +2,7 @@
   "name": "hastati",
   "displayName": "Hastati",
   "description": "Simple text aligner (for now)",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "rgiordani",
   "engines": {
     "vscode": "^1.85.0"

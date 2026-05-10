@@ -10,12 +10,15 @@ export function activate(context: vscode.ExtensionContext) {
 
         const editor = vscode.window.activeTextEditor;
 
-        const maxColumn = Math.max(...editor.selections.map((sel) => sel.start.character));
+        const firstPerLine = [...editor.selections]
+            .sort((a, b) => a.start.line - b.start.line || a.start.character - b.start.character)
+            .filter((sel, i, arr) => i === 0 || sel.start.line !== arr[i - 1].start.line);
 
-        editor.edit((editBuilder) => editor.selections.forEach((sel) => {
-            const numSpaces = maxColumn - sel.start.character;
-            if (numSpaces > 0) {
-                editBuilder.insert(sel.start, " ".repeat(numSpaces));
+        const maxColumn = firstPerLine.reduce((max, sel) => sel.start.character > max ? sel.start.character : max, 0);
+
+        editor.edit((editBuilder) => firstPerLine.forEach((sel) => {
+            if (maxColumn > sel.start.character) {
+                editBuilder.insert(sel.start, " ".repeat(maxColumn - sel.start.character));
             }
         }));
     }));
