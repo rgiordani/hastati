@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 export function activate(context: vscode.ExtensionContext) {
 
     // Aligns the selected texts to the rightmost selection start
-    context.subscriptions.push(vscode.commands.registerCommand("hastati.alignText", () => {
+    context.subscriptions.push(vscode.commands.registerCommand("hastati.alignText", async () => {
         if (!vscode.window.activeTextEditor) {
             return;
         }
@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 
         const maxColumn = firstPerLine.reduce((max, sel) => sel.start.character > max ? sel.start.character : max, 0);
 
-        editor.edit((editBuilder) => firstPerLine.forEach((sel) => {
+        await editor.edit((editBuilder) => firstPerLine.forEach((sel) => {
             if (maxColumn > sel.start.character) {
                 editBuilder.insert(sel.start, " ".repeat(maxColumn - sel.start.character));
             }
