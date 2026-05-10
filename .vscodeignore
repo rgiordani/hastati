@@ -1,5 +1,8 @@
 .vscode/**
 .vscode-test/**
+.claude/**
+.idea/**
+CLAUDE.md
 src/**
 .gitignore
 .yarnrc
